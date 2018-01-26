@@ -12,7 +12,8 @@
     "minimum-stability": "stable",
     "require": {
         "php": ">=7.0",
-        "illuminate/support": "5.4.* || 5.5.*"
+        "illuminate/support": "5.4.* || 5.5.*",
+        "illuminate/database": "5.4.* || 5.5.*"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.5",
@@ -34,7 +35,7 @@
                 "Voerro\\Laravel\\EmailVerification\\EmailVerificationServiceProvider"
             ],
             "aliases": {
-                "SimplePackage": "Voerro\\Laravel\\EmailVerificationFacade"
+                "EmailVerification": "Voerro\\Laravel\\EmailVerificationFacade"
             }
         }
     }

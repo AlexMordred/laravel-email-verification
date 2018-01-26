@@ -1,8 +1,8 @@
 <?php
 
-namespace Voerro\SimplePackage;
+namespace Voerro\Laravel\EmailVerification;
 
-class SimplePackage
+class EmailVerification
 {
     public static function add($a, $b)
     {

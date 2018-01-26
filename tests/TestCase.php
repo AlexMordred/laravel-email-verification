@@ -1,21 +1,21 @@
 <?php
 
-namespace Voerro\SimplePackage\Test;
+namespace Voerro\Laravel\EmailVerification\Test;
 
-use Voerro\SimplePackage\SimplePackageFacade;
-use Voerro\SimplePackage\SimplePackageServiceProvider;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
+use Voerro\Laravel\EmailVerification\EmailVerificationServiceProvider;
+use Voerro\Laravel\EmailVerification\EmailVerificationFacade;
 
 class TestCase extends OrchestraTestCase
 {
     /**
      * Load package service provider
      * @param  \Illuminate\Foundation\Application $app
-     * @return Voerro\SimplePackage\SimplePackageServiceProvider
+     * @return Voerro\Laravel\EmailVerification\EmailVerificationServiceProvider
      */
     protected function getPackageProviders($app)
     {
-        return [SimplePackageServiceProvider::class];
+        return [EmailVerificationServiceProvider::class];
     }
 
     /**
@@ -26,7 +26,7 @@ class TestCase extends OrchestraTestCase
     protected function getPackageAliases($app)
     {
         return [
-            'SimplePackage' => SimplePackageFacade::class,
+            'EmailVerification' => EmailVerificationFacade::class,
         ];
     }
 }
