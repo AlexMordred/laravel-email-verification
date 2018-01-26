@@ -1,0 +1,41 @@
+{
+    "name": "voerro/laravel-email-verification",
+    "description": "Email verification made simple",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alexander Zavyalov",
+            "email": "alex@voerro.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=7.0",
+        "illuminate/support": "5.4.* || 5.5.*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.5",
+        "orchestra/testbench": "^3.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Voerro\\Laravel\\EmailVerification\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Voerro\\Laravel\\EmailVerification\\Test\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Voerro\\Laravel\\EmailVerification\\EmailVerificationServiceProvider"
+            ],
+            "aliases": {
+                "SimplePackage": "Voerro\\Laravel\\EmailVerificationFacade"
+            }
+        }
+    }
+}
