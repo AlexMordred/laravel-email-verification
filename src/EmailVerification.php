@@ -80,12 +80,33 @@ class EmailVerification
      * @param string $token
      * @return boolean
      */
-    public static function tokenValid($token)
+    // public static function tokenValid($token)
+    // {
+    //     if (!$record = self::findToken($token)) {
+    //         return false;
+    //     }
+
+    //     return $record->valid_until >= Carbon::now();
+    // }
+
+    /**
+     * Verify an email/account after checking the token existence and validity
+     *
+     * @param string $token
+     * @return boolean
+     */
+    public static function verify($token)
     {
         if (!$record = self::findToken($token)) {
-            return false;
+            return "Token doesn't exist";
         }
 
-        return $record->valid_until >= Carbon::now();
+        if (!$record->isValid()) {
+            return 'Token has expired';
+        }
+
+        $record->verify();
+
+        return true;
     }
 }

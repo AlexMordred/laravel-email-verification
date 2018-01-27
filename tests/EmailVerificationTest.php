@@ -69,11 +69,26 @@ class EmailVerificationTest extends TestCase
         $this->assertTrue(EmailVerification::tokenExists($record->token));
     }
 
-    public function testTokenValidMethod()
+    // public function testTokenValidMethod()
+    // {
+    //     $record = EmailVerification::generateToken(1);
+
+    //     $this->assertTrue(EmailVerification::tokenValid($record->token));
+
+    //     $expiredRecord = EmailVerificationToken::create([
+    //         'user_id' => 2,
+    //         'token' => 'expired-token',
+    //         'valid_until' => Carbon::now()->subDays(1)
+    //     ]);
+
+    //     $this->assertFalse(EmailVerification::tokenValid($expiredRecord->token));
+    // }
+
+    public function testTokenValidityCheckMethod()
     {
         $record = EmailVerification::generateToken(1);
 
-        $this->assertTrue(EmailVerification::tokenValid($record->token));
+        $this->assertTrue($record->isValid());
 
         $expiredRecord = EmailVerificationToken::create([
             'user_id' => 2,
@@ -81,6 +96,30 @@ class EmailVerificationTest extends TestCase
             'valid_until' => Carbon::now()->subDays(1)
         ]);
 
-        $this->assertFalse(EmailVerification::tokenValid($expiredRecord->token));
+        $this->assertFalse($expiredRecord->isValid());
+    }
+
+    public function testVerifyingUnexistingToken()
+    {
+        $result = EmailVerification::verify('fake-token');
+
+        $this->assertEquals("Token doesn't exist", $result);
+    }
+
+    public function testVerifyingExpiredToken()
+    {
+        $record = EmailVerification::generateToken(1);
+
+        $result = EmailVerification::verify($record->token);
+
+        $this->assertTrue($result);
+        $this->assertTrue($record->fresh()->verified);
+    }
+
+    public function testVerifyingToken()
+    {
+        $result = EmailVerification::verify('fake-token');
+
+        $this->assertEquals("Token doesn't exist", $result);
     }
 }
