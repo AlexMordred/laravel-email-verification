@@ -11,7 +11,7 @@ class EmailVerification
      * Generates an email verification token for a user. If a token for the user
      * exists - generate a new one and update the expiration date.
      *
-     * @param App\User $user
+     * @param integer $userId
      * @return void
      */
     public static function generateToken($userId)
@@ -37,16 +37,18 @@ class EmailVerification
         return $record;
     }
 
-    // - проверка активирован ли юзер
+    /**
+     * Check if a user's email is verified
+     *
+     * @param integer $userId
+     * @return boolean
+     */
     public static function userVerified($userId)
     {
-        return false;
-    }
+        if (!$record = EmailVerificationToken::find($userId)) {
+            return false;
+        }
 
-    // - отправка email с токеном (+ make a Mailable)
-    // - проверка существует ли токен
-    // - проверка не истек ли токен
-    // - удаление токена
-    // - активация аккаунта (находим токен)
-    // - удаление юзера (?)
+        return $record->verified;
+    }
 }

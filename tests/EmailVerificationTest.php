@@ -36,4 +36,17 @@ class EmailVerificationTest extends TestCase
         $this->assertNotEquals($oldRecord->token, $newRecord->token);
         $this->assertNotEquals($oldRecord->valid_until, $newRecord->valid_until);
     }
+
+    public function testUserVerifiedMethod()
+    {
+        $this->assertFalse(EmailVerification::userVerified(1));
+
+        $record = EmailVerification::generateToken(1);
+
+        $this->assertFalse(EmailVerification::userVerified(1));
+
+        $record->update(['verified' => true]);
+
+        $this->assertTrue(EmailVerification::userVerified(1));
+    }
 }
