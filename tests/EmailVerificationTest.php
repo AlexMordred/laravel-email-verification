@@ -49,4 +49,13 @@ class EmailVerificationTest extends TestCase
 
         $this->assertTrue(EmailVerification::userVerified(1));
     }
+
+    public function testTokenExistsMethod()
+    {
+        $this->assertFalse(EmailVerification::tokenExists('fake-token'));
+
+        $record = EmailVerification::generateToken(1);
+
+        $this->assertTrue(EmailVerification::tokenExists($record->token));
+    }
 }

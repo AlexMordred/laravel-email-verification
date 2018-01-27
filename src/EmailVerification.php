@@ -51,4 +51,15 @@ class EmailVerification
 
         return $record->verified;
     }
+
+    /**
+     * Check if a token exists
+     *
+     * @param string $token
+     * @return boolean
+     */
+    public static function tokenExists($token)
+    {
+        return EmailVerificationToken::where('token', $token)->exists();
+    }
 }
