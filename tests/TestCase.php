@@ -8,6 +8,13 @@ use Voerro\Laravel\EmailVerification\EmailVerificationFacade;
 
 class TestCase extends OrchestraTestCase
 {
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->loadLaravelMigrations([]);
+    }
+
     /**
      * Load package service provider
      * @param  \Illuminate\Foundation\Application $app

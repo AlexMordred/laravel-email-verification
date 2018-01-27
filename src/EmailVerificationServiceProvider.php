@@ -18,6 +18,10 @@ class EmailVerificationServiceProvider extends ServiceProvider
         });
 
         $this->app->alias(EmailVerification::class, 'laravel-email-verification');
+
+        if ($this->app->config->get('email_verification') === null) {
+            $this->app->config->set('email_verification', require __DIR__ . '/config/email_verification.php');
+        }
     }
 
     /**
@@ -27,8 +31,10 @@ class EmailVerificationServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
+
         $this->publishes([
-            __DIR__ . '/database/migrations' => database_path('migrations'),
+            __DIR__ . '/config/email_verification.php' => config_path('email_verficiation.php')
         ]);
     }
 }
