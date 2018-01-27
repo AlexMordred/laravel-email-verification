@@ -53,6 +53,17 @@ class EmailVerification
     }
 
     /**
+     * Find a record by token
+     *
+     * @param string $token
+     * @return EmailVerificationToken
+     */
+    public static function findToken($token)
+    {
+        return EmailVerificationToken::where('token', $token)->first();
+    }
+
+    /**
      * Check if a token exists
      *
      * @param string $token
@@ -60,6 +71,21 @@ class EmailVerification
      */
     public static function tokenExists($token)
     {
-        return EmailVerificationToken::where('token', $token)->exists();
+        return self::findToken($token) !== null;
+    }
+
+    /**
+     * Check if a token is valid
+     *
+     * @param string $token
+     * @return boolean
+     */
+    public static function tokenValid($token)
+    {
+        if (!$record = self::findToken($token)) {
+            return false;
+        }
+
+        return $record->valid_until >= Carbon::now();
     }
 }

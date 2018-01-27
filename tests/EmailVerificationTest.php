@@ -5,6 +5,7 @@ namespace Voerro\Laravel\EmailVerification\Test;
 use Voerro\Laravel\EmailVerification\Models\EmailVerificationToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Voerro\Laravel\EmailVerification\EmailVerification;
+use Carbon\Carbon;
 
 class EmailVerificationTest extends TestCase
 {
@@ -50,6 +51,15 @@ class EmailVerificationTest extends TestCase
         $this->assertTrue(EmailVerification::userVerified(1));
     }
 
+    public function testFindTokenMethod()
+    {
+        $this->assertNull(EmailVerification::findToken('fake-token'));
+
+        $record = EmailVerification::generateToken(1);
+
+        $this->assertNotNull(EmailVerification::findToken($record->token));
+    }
+
     public function testTokenExistsMethod()
     {
         $this->assertFalse(EmailVerification::tokenExists('fake-token'));
@@ -57,5 +67,20 @@ class EmailVerificationTest extends TestCase
         $record = EmailVerification::generateToken(1);
 
         $this->assertTrue(EmailVerification::tokenExists($record->token));
+    }
+
+    public function testTokenValidMethod()
+    {
+        $record = EmailVerification::generateToken(1);
+
+        $this->assertTrue(EmailVerification::tokenValid($record->token));
+
+        $expiredRecord = EmailVerificationToken::create([
+            'user_id' => 2,
+            'token' => 'expired-token',
+            'valid_until' => Carbon::now()->subDays(1)
+        ]);
+
+        $this->assertFalse(EmailVerification::tokenValid($expiredRecord->token));
     }
 }
