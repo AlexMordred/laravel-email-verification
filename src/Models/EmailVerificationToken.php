@@ -10,6 +10,8 @@ class EmailVerificationToken extends Model
 
     protected $guarded = [];
 
+    protected $primaryKey = 'user_id';
+
     protected $casts = [
         'verified' => 'boolean'
     ];

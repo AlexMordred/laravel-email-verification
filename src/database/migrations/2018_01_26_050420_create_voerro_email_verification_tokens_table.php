@@ -14,7 +14,7 @@ class CreateVoerroEmailVerificationTokensTable extends Migration
     public function up()
     {
         Schema::create('voerro_email_verification_tokens', function (Blueprint $table) {
-            $table->unsignedInteger('user_id')->nullable();
+            $table->unsignedInteger('user_id')->unique();
             $table->string('token');
             $table->boolean('verified')->default(false);
             $table->timestamp('valid_until')->nullable();
