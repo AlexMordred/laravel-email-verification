@@ -6,6 +6,9 @@ use Voerro\Laravel\EmailVerification\Models\EmailVerificationToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Voerro\Laravel\EmailVerification\EmailVerification;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\DB;
+use Voerro\Laravel\EmailVerification\Mail\UserRegistered;
 
 class EmailVerificationTest extends TestCase
 {
@@ -121,5 +124,35 @@ class EmailVerificationTest extends TestCase
         $result = EmailVerification::verify('fake-token');
 
         $this->assertEquals("Token doesn't exist", $result);
+    }
+
+    public function testSendingVerificationEmailMessageToUnexistingUser()
+    {
+        Mail::fake();
+
+        $record = EmailVerification::generateToken(1);
+
+        $result = $record->send();
+
+        $this->assertFalse($result);
+    }
+
+    public function testSendingVerificationEmailMessage()
+    {
+        Mail::fake();
+
+        $userId = DB::table('users')->insertGetId([
+            'name' => 'test_user',
+            'email' => 'test@example.com',
+            'password' => bcrypt('secret')
+        ]);
+
+        $record = EmailVerification::generateToken($userId);
+
+        $result = $record->send();
+
+        Mail::assertSent(UserRegistered::class);
+
+        $this->assertTrue($result);
     }
 }
