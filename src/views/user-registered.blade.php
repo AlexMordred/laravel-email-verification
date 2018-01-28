@@ -1,10 +1,10 @@
 @component('mail::message')
-# Introduction
+# Email Verification
 
-The body of your message.
+Please, verify your email by clicking the button below.
 
-@component('mail::button', ['url' => ''])
-Button Text
+@component('mail::button', ['url' => route('auth.email.verification', $token)])
+Verify
 @endcomponent
 
 Thanks,<br>
