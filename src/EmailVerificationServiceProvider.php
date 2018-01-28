@@ -38,5 +38,7 @@ class EmailVerificationServiceProvider extends ServiceProvider
         ]);
 
         $this->loadViewsFrom(__DIR__ . '/views', 'email.verification');
+
+        $this->loadRoutesFrom(__DIR__ . '/routes.php');
     }
 }

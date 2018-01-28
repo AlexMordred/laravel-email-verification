@@ -155,4 +155,27 @@ class EmailVerificationTest extends TestCase
 
         $this->assertTrue($result);
     }
+
+    public function testAccountVerificationWhenVisitingTheVerificationUrl()
+    {
+        $this->get(route('auth.email.verification', 'fake-token'))
+            ->assertStatus(302)
+            ->assertRedirect(config('email_verification.redirect_on_failure'));
+
+        $userId = DB::table('users')->insertGetId([
+            'name' => 'test_user',
+            'email' => 'test@example.com',
+            'password' => bcrypt('secret')
+        ]);
+
+        $record = EmailVerification::generateToken($userId)->fresh();
+
+        $this->assertFalse($record->verified);
+
+        $this->get(route('auth.email.verification', $record->token))
+            ->assertStatus(302)
+            ->assertRedirect(config('email_verification.redirect_on_success'));
+
+        $this->assertTrue($record->fresh()->verified);
+    }
 }
