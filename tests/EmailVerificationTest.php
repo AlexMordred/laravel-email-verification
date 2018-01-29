@@ -163,7 +163,7 @@ class EmailVerificationTest extends TestCase
     {
         Mail::fake();
 
-        $userId = DB::table('users')->insertGetId([
+        $userId = DB::table(config('email_verification.users_table'))->insertGetId([
             'name' => 'test_user',
             'email' => 'test@example.com',
             'password' => bcrypt('secret')
@@ -185,7 +185,7 @@ class EmailVerificationTest extends TestCase
             ->assertStatus(302)
             ->assertRedirect(config('email_verification.redirect_on_failure'));
 
-        $userId = DB::table('users')->insertGetId([
+        $userId = DB::table(config('email_verification.users_table'))->insertGetId([
             'name' => 'test_user',
             'email' => 'test@example.com',
             'password' => bcrypt('secret')

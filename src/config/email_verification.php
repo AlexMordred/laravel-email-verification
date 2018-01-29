@@ -1,6 +1,9 @@
 <?php
 
 return [
+    // What DB table are your users stored in?
+    'users_table' => 'users',
+
     // How many days is a verification token valid for?
     'valid_for' => 7,
 

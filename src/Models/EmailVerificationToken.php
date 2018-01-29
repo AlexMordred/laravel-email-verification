@@ -49,7 +49,7 @@ class EmailVerificationToken extends Model
      */
     public function sendVerificationEmail()
     {
-        if (!$user = DB::table('users')->find($this->user_id)) {
+        if (!$user = DB::table(config('email_verification.users_table'))->find($this->user_id)) {
             return false;
         }
 
