@@ -4,6 +4,7 @@ namespace Voerro\Laravel\EmailVerification;
 
 use Voerro\Laravel\EmailVerification\Models\EmailVerificationToken;
 use Carbon\Carbon;
+use Voerro\Laravel\EmailVerification\Mail\UserRegistered;
 
 class EmailVerification
 {
@@ -117,7 +118,7 @@ class EmailVerification
     public static function registered($user)
     {
         $token = self::generateToken($user->id);
-        $token->sendVerificationEmail();
+        $token->sendVerificationEmail(UserRegistered::class);
 
         auth()->logout();
 

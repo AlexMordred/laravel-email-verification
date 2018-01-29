@@ -5,7 +5,6 @@ namespace Voerro\Laravel\EmailVerification\Models;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
-use Voerro\Laravel\EmailVerification\Mail\UserRegistered;
 use Illuminate\Support\Facades\Mail;
 
 class EmailVerificationToken extends Model
@@ -47,13 +46,13 @@ class EmailVerificationToken extends Model
      *
      * @return void
      */
-    public function sendVerificationEmail()
+    public function sendVerificationEmail($mailable)
     {
         if (!$user = DB::table(config('email_verification.users_table'))->find($this->user_id)) {
             return false;
         }
 
-        Mail::to($user->email)->send(new UserRegistered($this->token));
+        Mail::to($user->email)->send(new $mailable($this->token));
 
         return true;
     }
