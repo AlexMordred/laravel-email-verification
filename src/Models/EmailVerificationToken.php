@@ -16,6 +16,8 @@ class EmailVerificationToken extends Model
 
     protected $primaryKey = 'user_id';
 
+    public $incrementing = false;
+
     protected $casts = [
         'verified' => 'boolean'
     ];
@@ -45,9 +47,9 @@ class EmailVerificationToken extends Model
      *
      * @return void
      */
-    public function send()
+    public function sendVerificationEmail()
     {
-        if (!$user = DB::table('users')->where('id', $this->user_id)->first()) {
+        if (!$user = DB::table('users')->find($this->user_id)) {
             return false;
         }
 

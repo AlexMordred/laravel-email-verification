@@ -132,9 +132,11 @@ class EmailVerificationTest extends TestCase
 
         $record = EmailVerification::generateToken(1);
 
-        $result = $record->send();
+        $result = $record->sendVerificationEmail();
 
         $this->assertFalse($result);
+
+        Mail::assertNotSent(UserRegistered::class);
     }
 
     public function testSendingVerificationEmailMessage()
@@ -149,7 +151,7 @@ class EmailVerificationTest extends TestCase
 
         $record = EmailVerification::generateToken($userId);
 
-        $result = $record->send();
+        $result = $record->sendVerificationEmail();
 
         Mail::assertSent(UserRegistered::class);
 

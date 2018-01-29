@@ -5,7 +5,7 @@ return [
     'valid_for' => 7,
 
     // Where to redirect user in case of successful verification
-    'redirect_on_success' => '/home',
+    'redirect_on_success' => '/',
 
     // Where to redirect user in case of unsuccessful verification or in case
     // the user's account/email is not verified
