@@ -9,7 +9,7 @@ Easily add email verification to your project.
 1) Install the package using composer:
 
 ```bash
-composer require voerro/laravel-email-notification
+composer require voerro/laravel-email-verification
 ```
 
 2) Laravel 5.5 has package auto-discovery. If you have an older version, register the service provider in `config/app.php`:
