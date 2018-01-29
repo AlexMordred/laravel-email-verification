@@ -113,4 +113,15 @@ class EmailVerification
 
         return true;
     }
+
+    public static function registered($user)
+    {
+        $token = self::generateToken($user->id);
+        $token->sendVerificationEmail();
+
+        auth()->logout();
+
+        return redirect(config('email_verification.redirect_on_failure'))
+            ->with('status', 'A verification message has been sent to you, please check your email.');
+    }
 }
