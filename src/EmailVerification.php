@@ -123,6 +123,9 @@ class EmailVerification
         auth()->logout();
 
         return redirect(config('email_verification.redirect_on_failure'))
-            ->with('status', __('email-verification::email_verification.message.after.registration'));
+            ->with(
+            'status',
+            __('email-verification::email_verification.message.after.registration')
+        );
     }
 }
