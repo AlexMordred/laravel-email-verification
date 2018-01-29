@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Voerro\Laravel\EmailVerification\Mail\UserRegistered;
 
 class EmailVerificationToken extends Model
 {
@@ -46,7 +47,7 @@ class EmailVerificationToken extends Model
      *
      * @return void
      */
-    public function sendVerificationEmail($mailable)
+    public function sendVerificationEmail($mailable = UserRegistered::class)
     {
         if (!$user = DB::table(config('email_verification.users_table'))->find($this->user_id)) {
             return false;
