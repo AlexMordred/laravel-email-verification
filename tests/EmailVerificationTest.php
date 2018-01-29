@@ -111,19 +111,39 @@ class EmailVerificationTest extends TestCase
 
     public function testVerifyingExpiredToken()
     {
+        $expiredRecord = EmailVerificationToken::create([
+            'user_id' => 2,
+            'token' => 'expired-token',
+            'valid_until' => Carbon::now()->subDays(1)
+        ]);
+
+        $result = EmailVerification::verify($expiredRecord->token);
+
+        $this->assertEquals('Token has expired', $result);
+    }
+
+    public function testVerifyingTokenThatIsAlreadyVerified()
+    {
         $record = EmailVerification::generateToken(1);
 
         $result = EmailVerification::verify($record->token);
 
         $this->assertTrue($result);
         $this->assertTrue($record->fresh()->verified);
+
+        $result = EmailVerification::verify($record->token);
+
+        $this->assertEquals("Token doesn't exist", $result);
     }
 
     public function testVerifyingToken()
     {
-        $result = EmailVerification::verify('fake-token');
+        $record = EmailVerification::generateToken(1);
 
-        $this->assertEquals("Token doesn't exist", $result);
+        $result = EmailVerification::verify($record->token);
+
+        $this->assertTrue($result);
+        $this->assertTrue($record->fresh()->verified);
     }
 
     public function testSendingVerificationEmailMessageToUnexistingUser()
@@ -160,6 +180,7 @@ class EmailVerificationTest extends TestCase
 
     public function testAccountVerificationWhenVisitingTheVerificationUrl()
     {
+        $this->withoutExceptionHandling();
         $this->get(route('auth.email.verification', 'fake-token'))
             ->assertStatus(302)
             ->assertRedirect(config('email_verification.redirect_on_failure'));

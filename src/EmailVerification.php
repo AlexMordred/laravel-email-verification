@@ -105,6 +105,10 @@ class EmailVerification
             return 'Token has expired';
         }
 
+        if ($record->verified) {
+            return "Token doesn't exist";
+        }
+
         $record->verify();
 
         return true;
