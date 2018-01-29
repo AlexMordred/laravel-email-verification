@@ -72,20 +72,20 @@ class EmailVerificationTest extends TestCase
         $this->assertTrue(EmailVerification::tokenExists($record->token));
     }
 
-    // public function testTokenValidMethod()
-    // {
-    //     $record = EmailVerification::generateToken(1);
+    public function testTokenValidMethod()
+    {
+        $record = EmailVerification::generateToken(1);
 
-    //     $this->assertTrue(EmailVerification::tokenValid($record->token));
+        $this->assertTrue(EmailVerification::tokenValid($record->token));
 
-    //     $expiredRecord = EmailVerificationToken::create([
-    //         'user_id' => 2,
-    //         'token' => 'expired-token',
-    //         'valid_until' => Carbon::now()->subDays(1)
-    //     ]);
+        $expiredRecord = EmailVerificationToken::create([
+            'user_id' => 2,
+            'token' => 'expired-token',
+            'valid_until' => Carbon::now()->subDays(1)
+        ]);
 
-    //     $this->assertFalse(EmailVerification::tokenValid($expiredRecord->token));
-    // }
+        $this->assertFalse(EmailVerification::tokenValid($expiredRecord->token));
+    }
 
     public function testTokenValidityCheckMethod()
     {

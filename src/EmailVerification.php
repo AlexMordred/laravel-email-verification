@@ -81,14 +81,14 @@ class EmailVerification
      * @param string $token
      * @return boolean
      */
-    // public static function tokenValid($token)
-    // {
-    //     if (!$record = self::findToken($token)) {
-    //         return false;
-    //     }
+    public static function tokenValid($token)
+    {
+        if (!$record = self::findToken($token)) {
+            return false;
+        }
 
-    //     return $record->valid_until >= Carbon::now();
-    // }
+        return $record->valid_until >= Carbon::now();
+    }
 
     /**
      * Verify an email/account after checking the token existence and validity
