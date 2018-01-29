@@ -37,8 +37,13 @@ class EmailVerificationServiceProvider extends ServiceProvider
             __DIR__ . '/config/email_verification.php' => config_path('email_verficiation.php')
         ]);
 
-        $this->loadViewsFrom(__DIR__ . '/views', 'email.verification');
+        $this->loadViewsFrom(__DIR__ . '/views', 'email-verification');
 
         $this->loadRoutesFrom(__DIR__ . '/routes.php');
+
+        $this->loadTranslationsFrom(__DIR__ . '/translations', 'email-verification');
+        $this->publishes([
+            __DIR__ . '/translations' => resource_path('lang/vendor/email-verification'),
+        ]);
     }
 }

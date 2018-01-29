@@ -106,7 +106,10 @@ class EmailVerificationTest extends TestCase
     {
         $result = EmailVerification::verify('fake-token');
 
-        $this->assertEquals("Token doesn't exist", $result);
+        $this->assertEquals(
+            __('email-verification::email_verification.message.token.doesnt.exist'),
+            $result
+        );
     }
 
     public function testVerifyingExpiredToken()
@@ -119,7 +122,10 @@ class EmailVerificationTest extends TestCase
 
         $result = EmailVerification::verify($expiredRecord->token);
 
-        $this->assertEquals('Token has expired', $result);
+        $this->assertEquals(
+            __('email-verification::email_verification.message.token.has.expired'),
+            $result
+        );
     }
 
     public function testVerifyingTokenThatIsAlreadyVerified()
@@ -133,7 +139,10 @@ class EmailVerificationTest extends TestCase
 
         $result = EmailVerification::verify($record->token);
 
-        $this->assertEquals("Token doesn't exist", $result);
+        $this->assertEquals(
+            __('email-verification::email_verification.message.token.doesnt.exist'),
+            $result
+        );
     }
 
     public function testVerifyingToken()

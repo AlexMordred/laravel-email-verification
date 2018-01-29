@@ -1,12 +1,12 @@
 @component('mail::message')
-# Email Verification
+# @lang('email-verification::email_verification.email.subject')
 
-Please, verify your email by clicking the button below.
+@lang('email-verification::email_verification.email.message')
 
 @component('mail::button', ['url' => route('auth.email.verification', $token)])
-Verify
+@lang('email-verification::email_verification.email.button')
 @endcomponent
 
-Thanks,<br>
+@lang('email-verification::email_verification.email.footer'),<br>
 {{ config('app.name') }}
 @endcomponent

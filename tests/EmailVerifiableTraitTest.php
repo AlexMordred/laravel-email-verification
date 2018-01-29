@@ -6,7 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Voerro\Laravel\EmailVerification\EmailVerification;
 use Voerro\Laravel\EmailVerification\Models\User;
 
-class EmailVerificationTest extends TestCase
+class EmailVerifiableTraitTest extends TestCase
 {
     use RefreshDatabase;
 

@@ -29,7 +29,7 @@ class UserRegistered extends Mailable
      */
     public function build()
     {
-        return $this->markdown('email.verification::user-registered')
-            ->subject('Email Verification');
+        return $this->markdown('email-verification::user-registered')
+            ->subject(__('email-verification::email_verification.email.subject'));
     }
 }

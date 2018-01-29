@@ -11,5 +11,5 @@ Route::get('/auth/email-verification/{token}', function ($token) {
     }
 
     return redirect(config('email_verification.redirect_on_success'))
-        ->with('status', 'Your email has been verified!');
+        ->with('status', __('email-verification::email_verification.message.verification.success'));
 })->name('auth.email.verification');

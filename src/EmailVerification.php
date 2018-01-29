@@ -98,15 +98,15 @@ class EmailVerification
     public static function verify($token)
     {
         if (!$record = self::findToken($token)) {
-            return "Token doesn't exist";
+            return __('email-verification::email_verification.message.token.doesnt.exist');
         }
 
         if (!$record->isValid()) {
-            return 'Token has expired';
+            return __('email-verification::email_verification.message.token.has.expired');
         }
 
         if ($record->verified) {
-            return "Token doesn't exist";
+            return __('email-verification::email_verification.message.token.doesnt.exist');
         }
 
         $record->verify();
@@ -122,6 +122,6 @@ class EmailVerification
         auth()->logout();
 
         return redirect(config('email_verification.redirect_on_failure'))
-            ->with('status', 'A verification message has been sent to you, please check your email.');
+            ->with('status', __('email-verification::email_verification.message.after.registration'));
     }
 }

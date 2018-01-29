@@ -20,7 +20,7 @@ class LogoutUnverifiedUsers
             auth()->logout();
 
             return redirect(config('email_verification.redirect_on_failure'))
-                ->with('status', 'Your email is not verified. Please check your inbox for verification a message from us.');
+                ->with('status', __('email-verification::email_verification.middleware.redirect.message'));
         }
 
         return $next($request);
