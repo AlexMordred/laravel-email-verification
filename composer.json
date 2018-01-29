@@ -35,10 +35,7 @@
         "laravel": {
             "providers": [
                 "Voerro\\Laravel\\EmailVerification\\EmailVerificationServiceProvider"
-            ],
-            "aliases": {
-                "EmailVerification": "Voerro\\Laravel\\EmailVerificationFacade"
-            }
+            ]
         }
     }
 }
