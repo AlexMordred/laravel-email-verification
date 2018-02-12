@@ -128,4 +128,15 @@ class EmailVerification
             __('email-verification::email_verification.message.after.registration')
         );
     }
+
+    public static function registeredApi($user)
+    {
+        $token = self::generateToken($user->id);
+        $token->sendVerificationEmail(UserRegistered::class);
+
+        return response()->json([
+            'message' => __('email-verification::email_verification.message.after.registration'),
+            'status' => 201
+        ], 201);
+    }
 }
