@@ -4,7 +4,7 @@ namespace Voerro\Laravel\EmailVerification\Controllers;
 
 use Voerro\Laravel\EmailVerification\EmailVerification;
 
-class EmailVerificationController
+class EmailVerificationWebController
 {
     public function verify($token)
     {
