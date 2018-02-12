@@ -12,7 +12,7 @@ Easily add email verification to your web project or API.
 composer require voerro/laravel-email-verification
 ```
 
-2) Laravel 5.5 has package auto-discovery. If you have an older version, register the service provider in `config/app.php`:
+2) Laravel has package auto-discovery since version 5.5. If you have an older version, register the service provider in `config/app.php`:
 
 ```php
 ...
@@ -73,7 +73,7 @@ protected function registered($request, $user)
 
 The `registered()` method generates a token for a newly registered user, emails it to them, logs the user out, and redirects them to the login page with a message. More on this later.
 
-2) Register the package's middleware which will logout and redirect to the login page users with unverified emails. You can do this in the `app/Http/Kernel.php` file like this.
+2) Register the package's middleware which logs out and redirect to the login page all authenticated users with unverified emails. You can do this in the `app/Http/Kernel.php` file like this.
 
 ```php
 ...
@@ -104,9 +104,9 @@ Further steps for an API project. Skip this section if you're developing a regul
 return EmailVerification::registeredApi($user);
 ```
 
-The `registeredApi()` method generates a token for a newly registered user, emails it to them, and returns a JSON response:
+The `registeredApi()` method generates a token for a newly registered user, emails it to them, and returns a JSON response.
 
-2) Register the package's middleware which will logout and redirect to the login page users with unverified emails. You can do this in the `app/Http/Kernel.php` file like this.
+2) Register the package's middleware which logs out all the authenticated users with unverified emails and returns a JSON response with a 409 status code. You can do this in the `app/Http/Kernel.php` file like this.
 
 ```php
 ...
@@ -128,9 +128,9 @@ protected $middlewareGroups = [
 ];
 ```
 
-You can also register this middleware as a route middleware to apply it to selected routes and not the whole `web` middleware group.
+You can also register this middleware as a route middleware to apply it to selected routes and not the whole `api` middleware group.
 
-3) The email verification link sent in the email will point to whatever domain the API is located, even if you're using a web client on a different domain, or say a mobile client.
+3) The email verification link sent in the email will point to whatever domain the API is located at, even if you're using a web client on a different domain, or say a mobile client.
 
 The package provides a GET endpoint `/api/auth/email-verification/{token}` in case you want to handle the verification in some different way. It tries to verify the provided in the URL token and returns a JSON response with a `message` and a 200 status (in case the token is correct) or 404 status (if the token does not exists or is expired).
 
@@ -138,13 +138,13 @@ You'd probably want to use your own mailable in this case as well. Read about ho
 
 ## Manually Handling or Customizing the Process
 
-If you'd like to manually handle or customize the process, take a look at the `src/EmailVerification.php` class. This is the main file of the package. You can use all the methods from it directly whenever you want to, each method has a DocBlock.
+If you'd like to manually handle or customize the process, take a look at the `src/EmailVerification.php` class. This is the main file of the package. You can use all the methods from it directly wherever you want to, each method has a DocBlock.
 
 The `registered()` method that was mentioned above also comes from that class.
 
 ### The registered() Method
 
-You have to copy the code from the `registered()` method and modify it (for example, to use custom mailable). Below is the code of the original method.
+Below is the code of the original method.
 
 ```php
 public static function registered($user)
@@ -162,7 +162,7 @@ public static function registered($user)
 }
 ```
 
-And this is the `registeredApi()` method under the hood in case you're developoing an API:
+And this is the `registeredApi()` method under the hood in case you're developing an API:
 
 ```php
 public static function registeredApi($user)
